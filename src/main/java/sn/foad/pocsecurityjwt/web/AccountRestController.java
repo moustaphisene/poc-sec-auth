@@ -34,25 +34,25 @@ public class AccountRestController {
     }
 
     @GetMapping(path = "/pocusers")
-    @PostAuthorize("hasAnyAuthority('USER')")
+    @PostAuthorize("hasAuthority('USER')")
     public List<PocUsers> pocUsers() {
         return accountService.listUsers();
     }
 
-    @PostAuthorize("hasAnyAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/pocusers")
     public PocUsers saveUser(@RequestBody PocUsers pocUsers) {
         return accountService.addUser(pocUsers);
     }
 
     @PostMapping(path = "/pocroles")
-    @PostAuthorize("hasAnyAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('ADMIN')")
     public PocRoles saveRole(@RequestBody PocRoles pocRoles) {
         return accountService.addRole(pocRoles);
     }
 
     @PostMapping(path = "/pocaddroles")
-    @PostAuthorize("hasAnyAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('ADMIN')")
     public void addRoleToUser(@RequestBody RoleUserForm roleUserForm) {
         accountService.addRoleToUser(roleUserForm.getUsername(), roleUserForm.getRoleName());
     }
