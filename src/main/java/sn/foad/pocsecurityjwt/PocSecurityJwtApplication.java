@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import sn.foad.pocsecurityjwt.entities.PocRoles;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 @SpringBootApplication
+//@EnableGlobalMethodSecurity(prePostEnabled = true , securedEnabled = true)
 public class PocSecurityJwtApplication {
 
     public static void main(String[] args) {

@@ -3,11 +3,12 @@ package sn.foad.pocsecurityjwt.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import sn.foad.pocsecurityjwt.entities.PocUsers;
 import sn.foad.pocsecurityjwt.service.PocAccountService;
 
@@ -47,11 +49,22 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.headers().frameOptions().disable();
-        http.formLogin();
-        http.authorizeRequests().anyRequest().authenticated();
-        //http.authorizeRequests().anyRequest().permitAll();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
+        http.authorizeHttpRequests()
+                .requestMatchers("/h2-console/**").permitAll()
+                //.requestMatchers(HttpMethod.POST, "/pocusers/**").hasAuthority("ADMIN")
+                //.requestMatchers(HttpMethod.GET, "/pocusers/**").hasAuthority("USER")
+                .anyRequest().authenticated();
+
+
+        http.addFilter(new FilterAuthenticationJwt(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))));
+        http.addFilterBefore(new FilterAuthorizationJwt(), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

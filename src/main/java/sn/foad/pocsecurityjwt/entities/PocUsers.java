@@ -24,6 +24,5 @@ public class PocUsers {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-
     private Set<PocRoles> pocRoles=new HashSet<>();
 }
