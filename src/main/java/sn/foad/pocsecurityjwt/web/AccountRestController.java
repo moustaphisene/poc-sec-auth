@@ -63,7 +63,7 @@ public class AccountRestController {
         if (authToken != null && authToken.startsWith("Bearer ")) {
             try {
                 authToken = authToken.substring(7);
-                Algorithm algorithm = Algorithm.HMAC256("monPassSecret");
+                Algorithm algorithm = Algorithm.HMAC256("monSecretPass");
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = jwtVerifier.verify(authToken);
                 String username = decodedJWT.getSubject();
@@ -93,8 +93,8 @@ public class AccountRestController {
     }
 }
 
-@Data
-class RoleUserForm {
-    private String username;
-    private String roleName;
-}
+//@Data
+//class RoleUserForm {
+   // private String username;
+   // private String roleName;
+//}

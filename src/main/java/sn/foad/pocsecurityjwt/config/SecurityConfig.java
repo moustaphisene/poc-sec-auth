@@ -53,7 +53,7 @@ public class SecurityConfig {
 
 
         http.authorizeHttpRequests()
-                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/h2-console/**","/refreshToken/**","/login/**").permitAll()
                 //.requestMatchers(HttpMethod.POST, "/pocusers/**").hasAuthority("ADMIN")
                 //.requestMatchers(HttpMethod.GET, "/pocusers/**").hasAuthority("USER")
                 .anyRequest().authenticated();
