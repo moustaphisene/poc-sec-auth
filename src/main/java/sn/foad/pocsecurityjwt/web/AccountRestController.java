@@ -93,8 +93,8 @@ public class AccountRestController {
     }
 }
 
-//@Data
-//class RoleUserForm {
-   // private String username;
-   // private String roleName;
-//}
+@Data
+class RoleUserForm {
+   private String username;
+   private String roleName;
+}
